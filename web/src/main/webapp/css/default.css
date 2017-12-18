@@ -1,0 +1,15 @@
+div.message {
+    background-color: #FFFFFF;
+    border: 1px solid #333333;
+    color: #990000;
+    font-family: monospace;
+    margin: 15px;
+    padding: 5px;
+}
+body {
+    background-color: #EEEEEE;
+    font-family: Trebuchet MS,Lucida Sans Unicode,Arial,sans-serif;
+}
+fieldset {
+    width: 720px;
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<!-- 配置Server对象，此时会调用org.mortbay.jetty.Server默认构造函数new一个Server -->
+<Configure id="Server" class="org.mortbay.jetty.Server">
+
+	<Array id="plusConfig" type="java.lang.String">
+  		<Item>org.eclipse.jetty.webapp.WebInfConfiguration</Item>
+	    <Item>org.eclipse.jetty.webapp.WebXmlConfiguration</Item>
+	    <Item>org.eclipse.jetty.webapp.MetaInfConfiguration</Item>
+	    <Item>org.eclipse.jetty.webapp.FragmentConfiguration</Item>
+	    <Item>org.eclipse.jetty.plus.webapp.EnvConfiguration</Item> <!-- add for JNDI -->
+	    <Item>org.eclipse.jetty.plus.webapp.PlusConfiguration</Item>    <!-- add for JNDI -->
+	    <Item>org.eclipse.jetty.webapp.JettyWebXmlConfiguration</Item>
+	    <Item>org.eclipse.jetty.webapp.TagLibConfiguration</Item>
+	</Array>
+
+	<!-- 	<New id="DSTest" class="org.eclipse.jetty.plus.jndi.Resource"> -->
+	<New id="DSTest" class="org.mortbay.jetty.plus.naming.Resource">
+    	<Arg>java:comp/env/fosDataSource</Arg>
+    	<Arg>
+      	<New class="oracle.jdbc.pool.OracleDataSource">
+	        <Set name="DriverType">thin</Set>
+	        <Set name="URL">jdbc:oracle:thin:@qijia1.dev.weihui.com:1521:qijia</Set>
+	        <Set name="User">fosuser</Set>
+	        <Set name="Password">fosuser</Set>
+	        <Set name="connectionCachingEnabled">true</Set>
+	        <Set name="connectionCacheProperties">
+	          <New class="java.util.Properties">
+	            <Call name="setProperty">
+	              <Arg>MinLimit</Arg>
+	              <Arg>5</Arg>
+	            </Call>
+	            <!-- put the other properties in here too -->
+	          </New>
+	        </Set>
+		</New>
+    	</Arg>
+	</New>
+	<!-- tomcat下的配置参考 -->
+	<!--
+	<Resource name="CsaDataSource" auth="Container" type="javax.sql.DataSource" maxActive="100" maxIdle="30" maxWait="10000"
+		username="csauser" password="csauser" driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@10.65.193.12:1521:whpay" />
+
+	 -->
+</Configure>

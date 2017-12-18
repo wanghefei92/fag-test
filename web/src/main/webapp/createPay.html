@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<meta name="generator" content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.6), see www.w3.org">
+		<link rel="stylesheet" href="css/form-field-tooltip.css" media="screen" type="text/css">
+		<link rel="stylesheet" href="css/default.css" media="screen" type="text/css">
+		<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+		<script type="text/javascript" src="js/rounded-corners.js"></script>
+		<script type="text/javascript" src="js/form-field-tooltip.js"></script>
+		<script type="text/javascript" src="js/dateformat.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script language="Javascript" type="text/javascript">
+			var tooltipObj = new DHTMLgoodies_formTooltip();
+			tooltipObj.setTooltipPosition('right');
+			tooltipObj.setPageBgColor('#EEEEEE');
+			tooltipObj.setTooltipCornerSize(15);
+			tooltipObj.initFormFieldTooltip();
+			//显示层信息
+			function Show(obj) {
+				obj.style.display = "block";
+			}
+
+			//隐藏信息层
+			function Hide(obj) {
+				obj.style.display = "none";
+			}
+
+			function getNewOrderNo(){
+				return new DateFormat("yyyyMMddHHmmss").format(new Date())+Math.random(10000000000000, 90000000000000);
+			}
+
+			function newOrder() {
+				$('#request_no').val(getNewOrderNo());
+			}
+
+			function sendRequest() {
+				var paramString = assembleParamString();
+				var signType = $('#sign_type').val();
+				var sign = encodeURI($('#sign').val());
+				var data = "sign_type=" + signType + "&sign=" + sign + paramString;
+				//alert(data);
+				var targetUrl = $('#magAddressUrl').val();
+				var linkString = $('#linkString').val();
+				//window.open(targetUrl + '?' + data,'','height=500,width=800,scrollbars=yes,status =yes');
+				window.open(targetUrl + '?' + linkString,'','height=500,width=800,scrollbars=yes,status =yes');
+			}
+
+			function getSign() {
+				var paramNames = assembleParamNames();
+				var paramString = assembleParamString();
+				var signType = $('#sign_type').val();
+				var signKey = encodeURI($('#sign_key').val());
+				var data = "signType=" + signType + "&signKey=" + signKey + paramNames + paramString;
+				//alert(data);
+				$.get("mag/sign.do", data, function(result){
+					//alert(result)
+				    $("#sign").val(result["msg0"]);
+					$("#linkString").val(result["msg1"]);
+				}, 'json');
+			}
+
+			function assembleParamNames(){
+				var params = $('.default-q');
+				var q = "";
+				for(var idx=0; idx<params.length-1; idx++){
+					var tmp = params[idx].name + ",";
+					q += tmp;
+
+				}
+				q += params[params.length-1].name;
+				return "&paramNames=" + q;
+			}
+
+			function assembleParamString(){
+				var params = $('.default-q');
+				var q = "";
+				for(var idx=0; idx<params.length; idx++){
+					var tmp = "&" + params[idx].name + "=" + encodeURI(params[idx].value);
+					q += tmp;
+
+				}
+				return q;
+			}
+
+		</script>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<title>担保交易测试页面</title>
+	</head>
+	<body>
+		<div id="mainContainer">
+			<h1>担保交易测试页面</h1>
+			<fieldset>
+				<legend>
+					介绍
+				</legend>
+				<div>
+					本页面仅在测试环境使用，可根据提示输入参数测试担保交易。
+				</div>
+			</fieldset>
+			<br>
+			<br>
+			<fieldset>
+				<legend>
+					操作
+				</legend>
+				<input style="height: 40px;width: 150px;" type="button"  value="随机订单" id="actRefresh" onclick='newOrder()'/>
+				<input style="height: 40px;width: 150px;" type="button"  value="自动签名" id="actSign" onclick='getSign()'/>
+				<input style="height: 40px;width: 150px;" type="button" value="发起请求" id="actSend" onclick='sendRequest()'/>
+
+			</fieldset>
+			<br>
+			<br>
+	        <!-- -->
+
+       <fieldset>
+		<legend>
+		请求基本参数
+		</legend>
+       <table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+           <tbody>
+
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">接口名称:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="service" name="service" value="create_pay" tooltiptext="接口名称。,不可空<br>create_instant_trade">
+    <br>
+    </td>
+</tr>
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">接口版本:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="version" name="version" value="1.0" tooltiptext="接口版本，目前只有固定值1.0,不可空<br>1">
+    <br>
+    </td>
+</tr>
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">合作者身份ID:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="partner_id" name="partner_id" value="test001" tooltiptext="签约合作方的钱包唯一用户号。,不可空<br>2088001159940003">
+    <br>
+    </td>
+</tr>
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">参数编码字符集:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="_input_charset" name="_input_charset" value="GBK" tooltiptext="商户网站使用的编码格式，如utf-8、gbk、gb2312等。,不可空<br>GBK">
+    <br>
+    </td>
+</tr>
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">签名:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" id="sign" name="sign" value="e8qdwl9caset5zugii2r7q0k8ikopxor" tooltiptext="参见“签名机制”。,不可空<br>e8qdwl9caset5zugii2r7q0k8ikopxor">
+    <br>
+    </td>
+</tr>
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">签名方式:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" id="sign_type" name="sign_type" value="MD5" tooltiptext="签名方式只支持RSA、MD5。,不可空<br>MD5">
+    <br>
+    </td>
+</tr>
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">页面跳转同步返回页面路径:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="return_url" name="return_url" value="http://mas.test.qijia.net/atinterface/receive_return.htm" tooltiptext="钱包处理完请求后，当前页面自动跳转到商户网站里指定页面的http路径。批量，多商品的接口，无此字段,可空<br>http://mas.test.qijia.net/atinterface/receive_return.htm">
+    <br>
+    </td>
+</tr>
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">备注:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="memo" name="memo" value="" tooltiptext="说明信息,可空">
+    <br>
+    </td>
+</tr>
+
+           </tbody>
+       </table>
+       </fieldset>
+	        <!-- -->
+
+       <fieldset>
+		<legend>
+	      	 批量支付业务参数
+		</legend>
+       <table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+           <tbody>
+
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">商户网站请求号:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="request_no" name="request_no" value="20131105154925" tooltiptext="钱包合作商户请求号,不可空<br>订单编号：20131105154925"/>
+    <br>
+    </td>
+</tr>
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">商户网站唯一订单号集合:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="outer_trade_no_list" name="outer_trade_no_list" value="2013112405052132^2013112405052233" tooltiptext="钱包合作商户网站唯一订单号（确保在合作伙伴系统中唯一）。总数不超过十笔,不可空<br>2013112405052132^2013112405052233"/>
+    <br>
+    </td>
+</tr>
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">操作员Id:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="operator_id" name="operator_id" value="10005454" tooltiptext="代付操作的操作员,可空<br>1000002356"/>
+    <br>
+    </td>
+</tr>
+           </tbody>
+       </table>
+       </fieldset>
+
+
+       <fieldset>
+		<legend>
+	      	 批量支付支付参数
+		</legend>
+       <table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+           <tbody>
+
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">支付方式:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="pay_method" name="pay_method" value="cash^25.00^操作员ID(必填)|pos^100.00^|balance^25.00^|online_bank ^75.00^银行编码" tooltiptext="取值范围： cash（现金），pos（POS支付）， online_bank(网银支付)，balance(余额),可空<br>cash^25.00^操作员ID(必填)|pos^100.00^|balance^25.00^|online_bank ^75.00^银行编码"/>
+    <br>
+    </td>
+</tr>
+
+<tr>
+    <td style="vertical-align: top; width: 20%;">用户在商户平台支付时候的ip地址:
+    <br>
+    </td>
+    <td style="vertical-align: top; width: 80%;">
+    <input style="width: 100%;" class="default-q" id="buyer_ip" name="buyer_ip" value="202.114.12.45" tooltiptext="用户在商户平台下单的时候的ip地址，公网IP，不是内网IP,可空<br>202.114.12.45"/>
+    <br>
+    </td>
+</tr>
+
+           </tbody>
+       </table>
+       </fieldset>
+
+
+
+           </tbody>
+       </table>
+       </fieldset>
+
+       <fieldset>
+       	<legend>
+       		其他
+       	</legend>
+        <table>
+       	 <tbody>
+       					<tr>
+							<td style="vertical-align: top; width: 30%;">商户私钥（NOTENCRYPT）：
+							<br>
+							</td>
+							<td style="vertical-align: top; width: 70%;">
+							<input style="width: 100%;" id="sign_key" name="sign_key" value="1234567890qwertyuiopasdfghjklzxc" tooltiptext="商户私钥，用于生成密钥">
+							<br>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width: 30%;">商户私钥类型：
+							<br>
+							</td>
+							<td style="vertical-align: top; width: 70%;">
+							<input style="width: 100%;" id="keyType" name="keyType" value="MD5" tooltiptext="商户私钥，用于生成密钥">
+							<br>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width: 30%;">网关地址：
+							<br>
+							</td>
+							<td style="vertical-align: top; width: 70%;">
+							<input style="width: 100%;" id="magAddressUrl" name="magAddressUrl" value="http://10.65.209.28:8117/mag/gateway/receiveOrder.do" tooltiptext="收单网关地址"/>
+							<br>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width: 30%;">模拟商户返回：
+							<br>
+							</td>
+							<td style="vertical-align: top; width: 70%;">
+							<input style="width: 100%;" id="result" name="result" value="<result>1</result><redirecturl>http://weibo.com</redirecturl>" tooltiptext="商户私钥，用于生成密钥">
+							<br>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; width: 30%;">跳转请求：
+							<br>
+							</td>
+							<td style="vertical-align: top; width: 70%;">
+							<input style="width: 100%;" id="linkString" name="linkString" value="" tooltiptext="">
+							<br>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<br/>
+				<br/>
+			</fieldset>
+
+		</div>
+		<script language="Javascript" type="text/javascript">
+			var tooltipObj = new DHTMLgoodies_formTooltip();
+			tooltipObj.setTooltipPosition('right');
+			tooltipObj.setPageBgColor('#EEEEEE');
+			tooltipObj.setTooltipCornerSize(15);
+			tooltipObj.initFormFieldTooltip();
+			//newOrder();
+		</script>
+		<br>
+		<br>
+		<br>
+	</body>
+</html>
