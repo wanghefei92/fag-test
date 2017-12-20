@@ -71,6 +71,8 @@
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
 					data : data
 				}).done(function(result){
+					alert(result["msg0"]);
+					alert(result["msg1"]);
 				    $("#sign").val(result["msg0"]);
 					$("#linkString").val(result["msg1"]);
 				});
