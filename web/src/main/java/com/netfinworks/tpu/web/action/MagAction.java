@@ -65,8 +65,6 @@ public class MagAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("resultSign: " + resultSign);
-		System.out.println("linkString: " + linkString);
 		String msg = ActionUtil.buildMsg(ActionUtil.CODE_SUCCESS, resultSign, linkString);
 		model.addAttribute(ActionUtil.MESSAGE, msg);
 		return "/msg.jsp";
