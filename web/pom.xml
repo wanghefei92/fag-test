@@ -106,6 +106,10 @@
 			<groupId>asm</groupId>
 			<artifactId>asm-all</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.meidusa.toolkit</groupId>
+			<artifactId>fastmark</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
