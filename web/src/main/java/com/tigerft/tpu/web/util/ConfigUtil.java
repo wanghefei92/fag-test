@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.netfinworks.tpu.web.util;
+package com.tigerft.tpu.web.util;
 
 import org.springframework.beans.factory.annotation.Value;
 

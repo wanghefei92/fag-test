@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.netfinworks.tpu.web.util;
+package com.tigerft.tpu.web.util;
 
 import java.util.HashMap;
 import java.util.Map;

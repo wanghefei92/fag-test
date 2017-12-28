@@ -21,8 +21,8 @@
         </property>
     </bean>
 
-	<bean id="configUtil" class="com.netfinworks.tpu.web.util.ConfigUtil"/>
+	<bean id="configUtil" class="com.tigerft.tpu.web.util.ConfigUtil"/>
 
-    <bean id="springContextHolder" class="com.netfinworks.tpu.web.util.SpringContextHolder" lazy-init="false"/>
+    <bean id="springContextHolder" class="com.tigerft.tpu.web.util.SpringContextHolder" lazy-init="false"/>
 
 </beans>

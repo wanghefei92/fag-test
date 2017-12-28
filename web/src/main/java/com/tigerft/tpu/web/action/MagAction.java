@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.netfinworks.tpu.web.action;
+package com.tigerft.tpu.web.action;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.netfinworks.mag.util.sign.RSA;
 import com.netfinworks.mag.util.tools.MagCore;
-import com.netfinworks.tpu.web.util.ActionUtil;
-import com.netfinworks.tpu.web.util.ConfigUtil;
+import com.tigerft.tpu.web.util.ActionUtil;
+import com.tigerft.tpu.web.util.ConfigUtil;
 
 /**
  * <p>加签等</p>

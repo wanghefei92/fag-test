@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="com.netfinworks.tpu.web.util.SpringContextHolder" %>
-<%@ page import="com.netfinworks.tpu.web.util.ConfigUtil" %>
+<%@ page import="com.tigerft.tpu.web.util.SpringContextHolder" %>
+<%@ page import="com.tigerft.tpu.web.util.ConfigUtil" %>
 <%
     ConfigUtil configUtil = SpringContextHolder.getBean("configUtil");
     String tpuUrl = configUtil.getTpuAddressUrl();
